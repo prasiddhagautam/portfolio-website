@@ -21,14 +21,13 @@ class LoadingScreen {
     }
 
     init() {
-         whoamiipco
         this.showLoadingAnimation();
-        
-        
+
+
         window.addEventListener('load', () => {
             setTimeout(() => {
                 this.hideLoadingScreen();
-            }, 2000); 
+            }, 2000);
         });
     }
 

@@ -21,7 +21,7 @@ class LoadingScreen {
     }
 
     init() {
-        
+         whoamiipco
         this.showLoadingAnimation();
         
         

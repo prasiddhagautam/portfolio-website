@@ -172,7 +172,7 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  const { personalInfo, bio, achievements, skills, projects, education, certifications } = portfolioData;
+  const { personalInfo, bio, achievements, skills, projects, education } = portfolioData;
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
@@ -299,7 +299,7 @@ function App() {
         <CoreProfile data={bio} achievements={achievements} />
         <TechMatrix skills={skills} />
         <SystemShowcase projects={projects} />
-        <Timeline education={education} certifications={certifications} />
+        <Timeline education={education} />
         <SystemHub contactInfo={personalInfo} />
       </div>
     </ErrorBoundary>

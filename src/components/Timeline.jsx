@@ -1,8 +1,10 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { GraduationCap, Award, CheckCircle2 } from 'lucide-react'
+import { GraduationCap, Calendar, BookOpen, CheckCircle2, Award } from 'lucide-react'
 
-const Timeline = ({ education, certifications }) => {
+const Timeline = ({ education }) => {
+  const [activeTab, setActiveTab] = useState('university')
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
 
   const containerVariants = {
@@ -14,121 +16,174 @@ const Timeline = ({ education, certifications }) => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   }
 
+  const tabData = {
+    university: {
+      degree: "BSc (Hons) Computer Science with AI",
+      institution: "Softwarica College of IT & E-Commerce",
+      affiliation: "Coventry University Partner",
+      duration: "2025 - Present",
+      status: "Currently Enrolled",
+      badgeColor: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+      iconColor: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
+      description: "Pursuing specialized studies in Artificial Intelligence. The curriculum covers core computer science, neural networks, machine learning algorithms, and natural language processing.",
+      focusAreas: [
+        "Deep Learning & Neural Networks",
+        "Computer Vision & Pattern Recognition",
+        "Natural Language Processing (NLP)",
+        "AI Ethics & Relational Databases",
+        "Full-Stack Software Architecture"
+      ]
+    },
+    highschool: {
+      degree: "Higher Secondary Education (Science)",
+      institution: "Khwopa Higher Secondary School",
+      affiliation: "National Examinations Board (NEB)",
+      duration: "2023 - 2025",
+      status: "Grade: A",
+      badgeColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+      iconColor: "text-purple-400 bg-purple-500/10 border-purple-500/20",
+      description: "Completed secondary education with a major focus on physical sciences, advanced mathematics, and foundational computer science studies.",
+      focusAreas: [
+        "Advanced Physics & Mechanics",
+        "Mathematics & Calculus",
+        "Foundational Programming & Algorithms",
+        "Organic & Physical Chemistry",
+        "Scientific Research Methodology"
+      ]
+    }
+  }
+
+  const currentData = tabData[activeTab]
+
   return (
     <section id="education" className="py-16 relative overflow-hidden">
       {/* Background glow blobs */}
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
+      <div className="max-w-4xl mx-auto px-8 relative z-10">
         <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
 
           {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
+          <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
-              Education &amp; <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Certifications</span>
+              My <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Education</span>
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mb-4" />
-            <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-              Academic background, continuous learning path, and professional training.
+            <p className="text-slate-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+              Academic background, learning path, and formal training journey.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Education block */}
-            <motion.div
-              variants={itemVariants}
-              className="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-cyan-500/30 transition-all duration-300 shadow-xl group"
-            >
-              <div className="flex items-center space-x-3 mb-8">
-                <div className="p-3 rounded-lg bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
-                  <GraduationCap size={22} />
-                </div>
-                <h3 className="text-xl font-bold text-white tracking-tight">Academic Studies</h3>
-              </div>
+          {/* Tabs Selector */}
+          <motion.div variants={itemVariants} className="flex justify-center mb-10">
+            <div className="bg-slate-950/60 border border-white/10 rounded-full p-1.5 flex space-x-1 backdrop-blur-md">
+              <button
+                onClick={() => setActiveTab('university')}
+                className={`relative px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors duration-300 ${
+                  activeTab === 'university' ? 'text-black' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {activeTab === 'university' && (
+                  <motion.div
+                    layoutId="activeSubTab"
+                    className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  <GraduationCap size={14} />
+                  University
+                </span>
+              </button>
+              <button
+                onClick={() => setActiveTab('highschool')}
+                className={`relative px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors duration-300 ${
+                  activeTab === 'highschool' ? 'text-black' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {activeTab === 'highschool' && (
+                  <motion.div
+                    layoutId="activeSubTab"
+                    className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  <BookOpen size={14} />
+                  High School
+                </span>
+              </button>
+            </div>
+          </motion.div>
 
-              <div className="space-y-6">
-                <div>
-                  <span className="inline-block bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-3 py-1 rounded-full text-xs font-mono mb-3">
-                    BSc (Hons) Student
-                  </span>
-                  <h4 className="text-lg font-bold text-white mb-1 leading-snug">{education.degree}</h4>
-                  <p className="text-slate-400 text-sm font-medium mb-1">Softwarica College of IT &amp; E-Commerce</p>
-                  <p className="text-slate-500 text-xs font-mono">Coventry University Partner | 2025 - Present</p>
-                </div>
-
-                {education.studyFocus && education.studyFocus.length > 0 && (
-                  <div className="pt-4 border-t border-white/10">
-                    <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Curriculum Focus Area</p>
-                    <div className="flex flex-wrap gap-2">
-                      {education.studyFocus.map(topic => (
-                        <span
-                          key={topic}
-                          className="inline-block bg-white/[0.02] border border-white/5 text-slate-300 px-3 py-1 rounded-lg text-xs font-mono"
-                        >
-                          {topic}
-                        </span>
-                      ))}
+          {/* Active Tab Panel */}
+          <motion.div variants={itemVariants} className="relative min-h-[380px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                className="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl hover:border-cyan-500/20 transition-all duration-300 group"
+              >
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+                  <div className="space-y-3 text-left">
+                    <span className={`inline-flex border px-3 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase font-semibold ${currentData.badgeColor}`}>
+                      {currentData.status}
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tight">
+                      {currentData.degree}
+                    </h3>
+                    <p className="text-slate-300 text-sm font-semibold flex items-center gap-1.5">
+                      <GraduationCap size={16} className="text-cyan-400" />
+                      {currentData.institution} 
+                      <span className="text-xs text-slate-500 font-normal">({currentData.affiliation})</span>
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0 text-left md:text-right">
+                    <div className="inline-flex items-center gap-1.5 bg-white/[0.02] border border-white/5 px-4 py-2 rounded-xl text-slate-400 text-xs font-mono">
+                      <Calendar size={14} className="text-purple-400" />
+                      {currentData.duration}
                     </div>
                   </div>
-                )}
-
-                {/* Secondary level studies */}
-                <div className="pt-4 border-t border-white/10 space-y-3">
-                  <span className="inline-block bg-purple-500/10 text-purple-400 border border-purple-500/20 px-3 py-1 rounded-full text-xs font-mono">
-                    NEB +2 Science Student
-                  </span>
-                  <h4 className="text-lg font-bold text-white mb-1 leading-snug">Higher Secondary Education (Science)</h4>
-                  <p className="text-slate-400 text-sm font-medium mb-1">Khwopa Higher Secondary School</p>
-                  <p className="text-slate-500 text-xs font-mono">Grade : A | 2023 - 2025</p>
                 </div>
-              </div>
-            </motion.div>
 
-            {/* Certifications block */}
-            <motion.div
-              variants={itemVariants}
-              className="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-purple-500/30 transition-all duration-300 shadow-xl group"
-            >
-              <div className="flex items-center space-x-3 mb-8">
-                <div className="p-3 rounded-lg bg-purple-500/10 text-purple-400 group-hover:bg-purple-500/20 transition-colors">
-                  <Award size={22} />
+                <p className="text-slate-400 text-sm md:text-base leading-relaxed text-left mb-8 border-b border-white/5 pb-6">
+                  {currentData.description}
+                </p>
+
+                {/* Focus Areas */}
+                <div className="text-left">
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
+                    <Award size={14} className="text-cyan-400" />
+                    Key Focus Areas &amp; Curriculum
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {currentData.focusAreas.map((focus, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.01] hover:border-cyan-500/10 hover:bg-white/[0.02] transition-all duration-300"
+                      >
+                        <span className="flex-shrink-0 w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                        <span className="text-slate-300 text-xs md:text-sm font-medium">{focus}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-white tracking-tight">Certifications &amp; Achievements</h3>
-              </div>
-
-              <div className="space-y-6">
-                {certifications.map((cert, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                    className="flex items-start space-x-4 p-4 rounded-xl border border-white/5 bg-white/[0.01] hover:border-purple-500/20 hover:bg-white/[0.02] transition-all duration-300"
-                  >
-                    <div className="p-2 rounded-lg bg-white/5 text-purple-400 mt-0.5">
-                      <Award size={16} />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-white hover:text-purple-300 transition-colors">
-                        {cert.title}
-                      </h4>
-                      <p className="text-xs text-slate-400 mt-1 leading-relaxed">{cert.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
 
           {/* Summary card */}
           <motion.div
             variants={itemVariants}
-            className="mt-8 bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-cyan-500/20 transition-all duration-300 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6"
+            className="mt-12 bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-cyan-500/20 transition-all duration-300 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6"
           >
             <div className="flex items-center gap-3">
               <CheckCircle2 className="text-cyan-400 w-6 h-6 flex-shrink-0" />
-              <p className="text-slate-300 text-sm md:text-base font-medium">
+              <p className="text-slate-300 text-sm md:text-base font-medium text-left">
                 Actively learning and seeking opportunities to apply AI models in industry-standard products.
               </p>
             </div>

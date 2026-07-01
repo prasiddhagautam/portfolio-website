@@ -9,6 +9,7 @@ import TechMatrix from './components/TechMatrix';
 import SystemShowcase from './components/SystemShowcase';
 import Timeline from './components/Timeline';
 import SystemHub from './components/SystemHub';
+import ScrollToTop from './components/ScrollToTop';
 import Typewriter from './components/Typewriter';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, FileText, ChevronDown } from 'lucide-react';
@@ -301,6 +302,7 @@ function App() {
         <SystemShowcase projects={projects} />
         <Timeline education={education} />
         <SystemHub contactInfo={personalInfo} />
+        <ScrollToTop />
       </div>
     </ErrorBoundary>
   );

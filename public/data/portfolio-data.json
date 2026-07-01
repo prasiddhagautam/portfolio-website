@@ -1,0 +1,177 @@
+{
+  "personalInfo": {
+    "name": "Prasiddha Gautam",
+    "title": "AI Student & Python Developer",
+    "tagline": "Passionate about machine learning, deep learning, and building intelligent systems that solve real-world problems.",
+    "location": "Kathmandu, Nepal",
+    "website": "github.com/prasiddhagautam",
+    "email": "gautamprasiddha@gmail.com",
+    "github": "github.com/prasiddhagautam",
+    "linkedin": "https://www.linkedin.com/in/prasiddhagautam/",
+    "avatar": "/assets/images/pfp.jpg"
+  },
+  "bio": {
+    "summary": "Technical Skills\n\nAI Student and Python Developer currently pursuing a BSc (Hons) in Computer Science with AI at Coventry University. Passionate about machine learning, deep learning, computer vision, and building intelligent agentic systems that solve real-world challenges.",
+    "philosophy": "Teaching machines how to think, mostly so I don't have to do it all myself.",
+    "about": "Technical Skills\n\nAI Student and Python Developer currently pursuing a BSc (Hons) in Computer Science with AI at Coventry University. Passionate about machine learning, deep learning, computer vision, and building intelligent agentic systems that solve real-world challenges."
+  },
+  "achievements": [
+    {
+      "title": "15+ Projects Completed",
+      "description": "Successfully built and shipped full-stack web applications, game prototypes, and computer vision systems."
+    },
+    {
+      "title": "BSc (Hons) in CS with AI",
+      "description": "Currently studying machine learning, deep learning, NLP, computer vision, and AI ethics at Coventry University."
+    },
+    {
+      "title": "Python & AI Enthusiast",
+      "description": "Experienced in PyTorch, CUDA GPU acceleration, Retrieval-Augmented Generation (RAG), and DSP audio systems."
+    },
+    {
+      "title": "Active Collaborator",
+      "description": "Actively seeking internship and collaboration opportunities in AI, ML, and software development."
+    }
+  ],
+  "skills": {
+    "Languages": ["Python", "JavaScript", "TypeScript", "C#", "SQL", "HTML/CSS"],
+    "Core & Full-Stack": ["Python", "JavaScript", "TypeScript", "Next.js", "Node.js", "Linux", "Git & GitHub", "REST APIs"],
+    "AI & LLM Architecture": ["RAG", "LLM Orchestration", "LangChain / Dify", "Vector Databases", "Token Optimization", "Prompt Engineering", "PyTorch"],
+    "Data Intelligence & CV": ["Deep Learning", "Computer Vision", "Data Pipelines (ETL)", "Vector Embeddings", "Pandas", "NumPy", "OpenCV"],
+    "Product Design & Experience": ["Figma", "UI/UX Design", "Motion Design", "Video Editing", "Interactive Media"],
+    "Databases & Cloud": ["MongoDB", "MySQL", "Redis", "Vercel", "Docker", "Git Actions", "Serverless"]
+  },
+  "projects": [
+    {
+      "id": "babu-desktop",
+      "title": "Babu : Desktop Assistant",
+      "subtitle": "Voice-Activated CLI Assistant",
+      "year": "2025",
+      "repoUrl": "github.com/pagalmanxe/oe_babu",
+      "description": "Babu is a CLI-based desktop assistant built with Python that helps users automate tasks, manage schedules, and access information quickly through voice commands.",
+      "techStack": ["Python", "SpeechRecognition", "Pyttsx3", "OS Automation"],
+      "features": [
+        "Real-time voice command recognition and parsing",
+        "Speech synthesis (text-to-speech) feedback using Pyttsx3",
+        "Custom system shell and application automation commands",
+        "Fast local info search and scheduling automation"
+      ],
+      "highlights": "Designed a custom CLI helper featuring hands-free system control and fast local automation"
+    },
+    {
+      "id": "talent-khoj",
+      "title": "TalentKhoj",
+      "subtitle": "Talent Acquisition & Career Marketplace",
+      "year": "2026",
+      "repoUrl": "github.com/prasiddhagautam/AI39A_Group9_TalentKhoj",
+      "description": "TalentKhoj is a robust, production-grade talent acquisition and career marketplace platform. Engineered with a secure Flask architecture, a normalized relational database design, and real-time community tools, it addresses the full lifecycle of employment: from AI-driven resume optimization and verifiable employer-certified badges, to social engagement and real-time collaboration.",
+      "techStack": ["Python", "Flask", "MySQL", "JavaScript", "AJAX", "HTML/CSS"],
+      "features": [
+        "Role-Based Access Control (RBAC) with custom permission decorators",
+        "Secure cookie sessions and PBKDF2 password hashing",
+        "Thread-Local database connection management to prevent race conditions during concurrent AJAX operations",
+        "Automatic server-side HTML-to-PDF compilation for resumes",
+        "Responsive dashboards custom-tailored for candidates and companies"
+      ],
+      "highlights": "Architected a secure, concurrent Flask recruitment platform with thread-safe database pooling"
+    },
+    {
+      "id": "anonyvox",
+      "title": "AnonyVox",
+      "subtitle": "Real-Time AI Voice Changer",
+      "year": "2026",
+      "repoUrl": "github.com/prasiddhagautam/AnonyVox",
+      "description": "AnonyVox is a real-time, desktop audio application built in Python that wraps Retrieval-based Voice Conversion (RVC) and a low-latency DSP vocal effects matrix into a single, cohesive, premium dark-theme utility.",
+      "techStack": ["Python", "PyTorch", "CUDA", "sounddevice", "RVC", "DSP"],
+      "features": [
+        "Low-latency duplex audio pipeline at 44.1kHz using sounddevice",
+        "RVC AI Voice Conversion with GPU acceleration (CUDA)",
+        "Spectral Inversion Engine (Frequency Mirroring) via rfft / irfft matrix",
+        "Vocal Effects Matrix featuring Ring Modulation, Tremolo, and Overdrive Distortion",
+        "Premium cyberpunk dashboard with a reactive 33 FPS bezier-curve waveform visualizer"
+      ],
+      "highlights": "Engineered a low-latency multithreaded AI voice morpher with custom real-time audio DSP pipelines"
+    },
+    {
+      "id": "bahun-d-run",
+      "title": "Bahun-D Run Game",
+      "subtitle": "3D Unity Endless Runner",
+      "year": "2025",
+      "repoUrl": "github.com/13hugol/Bahun-D-Run",
+      "description": "A game project inspired by Bahun ko Khasi video from Twake Productions. Built for school with creative curved-world graphics and responsive gameplay mechanics in Unity.",
+      "techStack": ["C#", "Unity", "OpenGL ES 3.0", "Game Development"],
+      "features": [
+        "Curved world mechanics and dynamic visual effects",
+        "3-lane movement controller with jump/slide dynamics",
+        "Procedural obstacle and track generation system",
+        "Layered audio SFX system and persistent high-scores"
+      ],
+      "highlights": "Developed a mobile-optimized 3D Unity game with custom vertex curve shaders"
+    },
+    {
+      "id": "new-holy",
+      "title": "New Holy",
+      "subtitle": "School Web Application Portal",
+      "year": "2025",
+      "repoUrl": "github.com/13hugol/NewHoly",
+      "description": "A modern web application built with JavaScript, showcasing dynamic functionality, school administration mockups, and interactive student experience.",
+      "techStack": ["JavaScript", "HTML5", "CSS3", "Responsive Web Design"],
+      "features": [
+        "Dynamic content sections for announcements and galleries",
+        "Interactive online admission intake forms",
+        "Responsive, clean UI adapted across mobile and desktop screens",
+        "Fast client-side navigation prototype"
+      ],
+      "highlights": "Designed a modern school portal mockup showcasing premium responsiveness and dynamic UI features"
+    },
+    {
+      "id": "kaam-paryo",
+      "title": "Kaam Paryo Web App",
+      "subtitle": "Hyperlocal Task Marketplace",
+      "year": "2025",
+      "repoUrl": "github.com/13hugol/kaamparyo",
+      "description": "Kaam Paryo is a hyperlocal task marketplace connecting people who need tasks done with skilled taskers in their area. Built with real-time GPS tracking, smart matching algorithms, and a seamless user experience.",
+      "techStack": ["Node.js", "Express", "MongoDB", "Socket.IO", "WebSockets", "GalliMaps"],
+      "features": [
+        "Live location tracking and maps via GalliMaps API",
+        "Real-time notifications and task updates using Socket.IO",
+        "Geospatial query-based task matching within specific radii",
+        "JWT-based sessions and secure task status management"
+      ],
+      "highlights": "Co-created Nepal's first hyperlocal real-time task platform using WebSockets and Express"
+    }
+  ],
+  "education": {
+    "degree": "BSc (Hons) Computer Science with AI - Coventry University (Softwarica College)"
+  },
+  "certifications": [
+    {
+      "title": "Coventry University AI & ML Curriculum",
+      "description": "Covering Deep Learning, NLP, Computer Vision, and AI Ethics"
+    },
+    {
+      "title": "Khwopa HSE Science & Computer Science",
+      "description": "Strong foundation in mathematics and programming"
+    }
+  ],
+  "keywords": [
+    "Python",
+    "Flask",
+    "MySQL",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "WebSockets",
+    "Socket.IO",
+    "PyTorch",
+    "CUDA",
+    "OpenCV",
+    "Unity",
+    "C#",
+    "Figma",
+    "UI/UX"
+  ]
+}

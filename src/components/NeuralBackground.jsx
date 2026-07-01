@@ -67,11 +67,27 @@ const NeuralBackground = () => {
       height = canvas.height = window.innerHeight
     }
 
+    let isPaused = false
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isPaused = true
+        cancelAnimationFrame(animationFrameId)
+      } else {
+        if (isPaused) {
+          isPaused = false
+          animate()
+        }
+      }
+    }
+
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('mouseleave', handleMouseLeave)
     window.addEventListener('resize', handleResize)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
 
     const animate = () => {
+      if (isPaused) return
       ctx.clearRect(0, 0, width, height)
 
       // Draw connections
@@ -126,6 +142,7 @@ const NeuralBackground = () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseleave', handleMouseLeave)
       window.removeEventListener('resize', handleResize)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [])
 

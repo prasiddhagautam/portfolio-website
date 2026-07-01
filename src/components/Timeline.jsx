@@ -1,3 +1,4 @@
+// Academic timeline component
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'

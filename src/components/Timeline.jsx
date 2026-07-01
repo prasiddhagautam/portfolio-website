@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { GraduationCap, Calendar, BookOpen, CheckCircle2, Award } from 'lucide-react'
+import { GraduationCap, Calendar, BookOpen, CheckCircle2 } from 'lucide-react'
 
 const Timeline = ({ education }) => {
   const [activeTab, setActiveTab] = useState('university')
@@ -20,19 +20,12 @@ const Timeline = ({ education }) => {
     university: {
       degree: "BSc (Hons) Computer Science with AI",
       institution: "Softwarica College of IT & E-Commerce",
-      affiliation: "Coventry University Partner",
+      affiliation: "Coventry University Affiliation",
       duration: "2025 - Present",
       status: "Currently Enrolled",
       badgeColor: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-      iconColor: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
+      iconColor: "text-cyan-400 bg-cyan-500/5 border-cyan-500/10",
       description: "Pursuing specialized studies in Artificial Intelligence. The curriculum covers core computer science, neural networks, machine learning algorithms, and natural language processing.",
-      focusAreas: [
-        "Deep Learning & Neural Networks",
-        "Computer Vision & Pattern Recognition",
-        "Natural Language Processing (NLP)",
-        "AI Ethics & Relational Databases",
-        "Full-Stack Software Architecture"
-      ]
     },
     highschool: {
       degree: "Higher Secondary Education (Science)",
@@ -41,15 +34,8 @@ const Timeline = ({ education }) => {
       duration: "2023 - 2025",
       status: "Grade: A",
       badgeColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-      iconColor: "text-purple-400 bg-purple-500/10 border-purple-500/20",
+      iconColor: "text-purple-400 bg-purple-500/5 border-purple-500/10",
       description: "Completed secondary education with a major focus on physical sciences, advanced mathematics, and foundational computer science studies.",
-      focusAreas: [
-        "Advanced Physics & Mechanics",
-        "Mathematics & Calculus",
-        "Foundational Programming & Algorithms",
-        "Organic & Physical Chemistry",
-        "Scientific Research Methodology"
-      ]
     }
   }
 
@@ -118,7 +104,7 @@ const Timeline = ({ education }) => {
           </motion.div>
 
           {/* Active Tab Panel */}
-          <motion.div variants={itemVariants} className="relative min-h-[380px]">
+          <motion.div variants={itemVariants} className="relative min-h-[250px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -126,10 +112,22 @@ const Timeline = ({ education }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.35, ease: 'easeInOut' }}
-                className="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl hover:border-cyan-500/20 transition-all duration-300 group"
+                className="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl hover:border-cyan-500/20 transition-all duration-300 group flex flex-col md:flex-row gap-8 items-start"
               >
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
-                  <div className="space-y-3 text-left">
+                {/* Left side: Large Icon and Duration */}
+                <div className="flex md:flex-col items-center md:items-start gap-4 md:gap-6 flex-shrink-0 w-full md:w-auto">
+                  <div className={`p-4 rounded-2xl border ${currentData.iconColor} flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}>
+                    {activeTab === 'university' ? <GraduationCap size={32} /> : <BookOpen size={32} />}
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 bg-white/[0.02] border border-white/5 px-4 py-2 rounded-xl text-slate-400 text-xs font-mono">
+                    <Calendar size={14} className="text-purple-400" />
+                    {currentData.duration}
+                  </div>
+                </div>
+
+                {/* Right side: Core details */}
+                <div className="flex-1 text-left space-y-4">
+                  <div className="space-y-2">
                     <span className={`inline-flex border px-3 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase font-semibold ${currentData.badgeColor}`}>
                       {currentData.status}
                     </span>
@@ -137,40 +135,13 @@ const Timeline = ({ education }) => {
                       {currentData.degree}
                     </h3>
                     <p className="text-slate-300 text-sm font-semibold flex items-center gap-1.5">
-                      <GraduationCap size={16} className="text-cyan-400" />
                       {currentData.institution} 
                       <span className="text-xs text-slate-500 font-normal">({currentData.affiliation})</span>
                     </p>
                   </div>
-                  <div className="flex-shrink-0 text-left md:text-right">
-                    <div className="inline-flex items-center gap-1.5 bg-white/[0.02] border border-white/5 px-4 py-2 rounded-xl text-slate-400 text-xs font-mono">
-                      <Calendar size={14} className="text-purple-400" />
-                      {currentData.duration}
-                    </div>
-                  </div>
-                </div>
-
-                <p className="text-slate-400 text-sm md:text-base leading-relaxed text-left mb-8 border-b border-white/5 pb-6">
-                  {currentData.description}
-                </p>
-
-                {/* Focus Areas */}
-                <div className="text-left">
-                  <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
-                    <Award size={14} className="text-cyan-400" />
-                    Key Focus Areas &amp; Curriculum
-                  </h4>
-                  <div className="grid md:grid-cols-2 gap-3">
-                    {currentData.focusAreas.map((focus, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.01] hover:border-cyan-500/10 hover:bg-white/[0.02] transition-all duration-300"
-                      >
-                        <span className="flex-shrink-0 w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                        <span className="text-slate-300 text-xs md:text-sm font-medium">{focus}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+                    {currentData.description}
+                  </p>
                 </div>
               </motion.div>
             </AnimatePresence>

@@ -40,7 +40,7 @@ const CoreProfile = ({ data, achievements }) => {
                   <div className="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
                     <User size={20} />
                   </div>
-                  <h3 className="text-xl font-bold text-white tracking-tight">Biography</h3>
+                  <h3 className="text-xl font-bold text-white tracking-tight">About Me</h3>
                 </div>
                 <div className="space-y-6">
                   <p className="text-slate-300 leading-relaxed text-sm md:text-base">

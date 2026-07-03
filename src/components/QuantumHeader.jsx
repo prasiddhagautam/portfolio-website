@@ -121,13 +121,13 @@ const QuantumHeader = ({ visible = true }) => {
               transition={{ delay: 0.8, duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="https://buymemomo.com/Prish"
+              href="https://kamauchanepali.com/tip/prish_op/"
               target="_blank"
               rel="noopener noreferrer"
               className="relative bg-gradient-to-r from-cyan-500 to-purple-500 text-black px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] group overflow-hidden flex items-center"
             >
               <span className="relative z-10 flex items-center gap-1">
-                🥟 Buy me a momo
+                🧀 Buy me a cheese
               </span>
             </motion.a>
           </div>

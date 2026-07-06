@@ -27,38 +27,40 @@ const CoreProfile = ({ data, achievements }) => {
         className="grid lg:grid-cols-12 gap-12 items-start"
       >
         
-        {/* Left Column - Biography */}
-        <motion.div variants={itemVariants} className="lg:col-span-7 space-y-6 text-left">
-          <div className="text-xs uppercase tracking-widest font-mono font-bold text-amber-600">
-            / About, Bio &amp; Career Objective
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
-            My <span className="text-amber-500">Story</span>
-          </h2>
+        {/* Left Column - Biography & Highlights (Now Stacked) */}
+        <motion.div variants={itemVariants} className="lg:col-span-7 space-y-8 text-left">
           
-          <div className="bg-white border border-black/5 rounded-[2rem] p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-2.5 rounded-xl bg-black/5 text-black">
-                <User size={18} />
-              </div>
-              <span className="font-bold text-black text-sm uppercase font-mono tracking-widest">Biography</span>
+          {/* Biography Section */}
+          <div className="space-y-6">
+            <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-1">
+              / About, Bio &amp; Career Objective
             </div>
+            <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
+              My <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">Story</span>
+            </h2>
             
-            <p className="text-black/75 leading-relaxed text-sm md:text-base whitespace-pre-line">
-              {data.summary}
-            </p>
+            <div className="bg-white border border-black/5 rounded-[2rem] p-8 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-6">
+              <div className="flex items-center space-x-3">
+                <div className="p-2.5 rounded-xl bg-black/5 text-black">
+                  <User size={18} />
+                </div>
+                <span className="font-bold text-black text-sm uppercase font-mono tracking-widest">Biography</span>
+              </div>
+              
+              <p className="text-black/75 leading-relaxed text-sm md:text-base whitespace-pre-line">
+                {data.summary}
+              </p>
 
-            <div className="border-t border-black/5 pt-6">
-              <div className="text-xs font-mono font-bold text-black/40 uppercase tracking-widest mb-2">My Philosophy</div>
-              <blockquote className="border-l-4 border-amber-500 pl-4 text-black/60 italic text-sm md:text-base">
-                "{data.philosophy}"
-              </blockquote>
+              <div className="border-t border-black/5 pt-6">
+                <div className="text-sm font-lostlate font-bold text-black/40 uppercase tracking-widest mb-2">My Philosophy</div>
+                <blockquote className="border-l-4 border-amber-500 pl-4 text-black/90 font-sketsa text-xl sm:text-2xl font-bold leading-relaxed">
+                  "{data.philosophy}"
+                </blockquote>
+              </div>
             </div>
           </div>
-        </motion.div>
 
-        {/* Right Column - Highlights & Stats */}
-        <motion.div variants={itemVariants} className="lg:col-span-5 space-y-8">
+          {/* Highlights Tab (Moved below My Story) */}
           <div className="bg-white border border-black/5 rounded-[2rem] p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
             <div className="flex items-center space-x-3 mb-6">
               <div className="p-2.5 rounded-xl bg-black/5 text-black">
@@ -93,16 +95,27 @@ const CoreProfile = ({ data, achievements }) => {
             <div className="border-t border-black/5 mt-8 pt-6">
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
-                  <div className="text-4xl font-black text-black font-mono">15+</div>
-                  <div className="text-[10px] uppercase tracking-widest text-black/40 font-bold mt-1">Completed Projects</div>
+                  <div className="text-4xl sm:text-5xl font-black text-black font-lostlate">15+</div>
+                  <div className="text-[10px] uppercase tracking-widest text-black/40 font-bold mt-1 font-lostlate">Completed Projects</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-black text-black font-mono">AI/ML</div>
-                  <div className="text-[10px] uppercase tracking-widest text-black/40 font-bold mt-1">Core Focus Area</div>
+                  <div className="text-4xl sm:text-5xl font-black text-black font-lostlate">AI/ML</div>
+                  <div className="text-[10px] uppercase tracking-widest text-black/40 font-bold mt-1 font-lostlate">Core Focus Area</div>
                 </div>
               </div>
             </div>
+          </div>
 
+        </motion.div>
+
+        {/* Right Column - Photo Spacer (Stitches the photo to the right of My Story) */}
+        <motion.div variants={itemVariants} className="lg:col-span-5 space-y-8 flex flex-col items-center">
+          <div className="w-full relative hidden lg:block">
+            {/* Invisible transparent spacer */}
+            <div 
+              id="photo-spacer-about" 
+              className="w-full h-[480px]"
+            />
           </div>
         </motion.div>
 

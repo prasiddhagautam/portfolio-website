@@ -25,7 +25,7 @@ const Timeline = ({ education }) => {
       duration: "2025 - Present",
       status: "Currently Enrolled",
       badgeColor: "bg-amber-100 text-amber-700 border-amber-200",
-      description: "Pursuing specialized studies in Artificial Intelligence. The curriculum covers core computer science, neural networks, machine learning algorithms, and natural language processing.",
+      description: "Pursuing specialized studies in Artificial Intelligence and Software Systems. The curriculum covers core computer science, neural networks, full-stack web development, and natural language processing.",
     },
     highschool: {
       degree: "Higher Secondary Education (Science)",
@@ -46,11 +46,11 @@ const Timeline = ({ education }) => {
 
         {/* Header */}
         <motion.div variants={itemVariants} className="text-center mb-12 space-y-4">
-          <div className="text-xs uppercase tracking-widest font-mono font-bold text-amber-600">
+          <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-1">
             / Academics &amp; Qualifications
           </div>
-          <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
-            My <span className="text-amber-500">Education</span>
+          <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight text-center">
+            My <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">Education</span>
           </h2>
           <p className="text-black/60 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
             My academic timeline and formal learning path.
@@ -153,7 +153,7 @@ const Timeline = ({ education }) => {
           <div className="flex items-center gap-3 text-left">
             <CheckCircle className="text-amber-500 w-5 h-5 flex-shrink-0" />
             <p className="text-black/75 text-xs md:text-sm font-semibold">
-              Actively seeking internship and collaboration opportunities in AI, ML, and software systems.
+              Actively seeking internship and collaboration opportunities in AI, Full Stack development, and software systems.
             </p>
           </div>
           <a

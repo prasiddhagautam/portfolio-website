@@ -39,8 +39,8 @@ const StackingCard = ({ card, idx }) => {
         </div>
 
         {/* Index & Title merged */}
-        <h3 className="text-xl sm:text-2xl font-black text-black tracking-tight mb-4 flex items-center space-x-2">
-          <span>{card.num}.</span>
+        <h3 className="text-xl sm:text-2xl font-black text-black tracking-tight mb-4 flex items-center">
+          <span className="font-lostlate text-[1.25em] text-amber-500 mr-2 relative -top-[0.02em]">{card.num}.</span>
           <span>{card.title}</span>
         </h3>
 
@@ -81,30 +81,30 @@ const TechMatrix = () => {
     },
     {
       num: '02',
-      label: 'Analytical Core',
-      title: 'Data Intelligence & CV',
-      description: 'Building machine learning datasets, video sequence detection pipelines, and spectral models.',
+      label: 'Client-Facing Systems',
+      title: 'Full-Stack Web Development',
+      description: 'Creating high-performance web applications with React, Next.js, and modern state management.',
       points: [
-        'PyTorch, TensorFlow, Scikit-Learn',
-        'Deep learning model training & optimization',
-        'Computer vision: OpenCV, YOLO models',
-        'Dataset preprocessing & augmentation',
-        'Neural audio & signal processing',
-        'Spectral inference & signal processing'
+        'React.js, Next.js, TypeScript',
+        'Tailwind CSS, Responsive Web Design',
+        'Client-side state management & caching',
+        'Interactive motion design & micro-animations',
+        'Performance optimization & SEO best practices',
+        'Modern bundlers: Vite, Webpack'
       ]
     },
     {
       num: '03',
-      label: 'System Engineering',
-      title: 'Full-Stack & Core Systems',
-      description: 'Writing scalable interfaces, concurrent databases, and backend automation CLI systems.',
+      label: 'Infrastructure & APIs',
+      title: 'Backend & System Design',
+      description: 'Designing scalable microservices, concurrent databases, and backend automation CLI systems.',
       points: [
         'Python scripting, concurrency, asyncio',
-        'JavaScript, React, Tailwind CSS layouts',
-        'Node.js, Express, REST API pipelines',
-        'Database design: PostgreSQL, MongoDB',
-        'Command line tools & shell bash scripting',
-        'CI/CD pipelines & Docker containerization'
+        'Node.js, Express, Fastify, REST APIs',
+        'Databases: PostgreSQL, MongoDB, Redis',
+        'WebSockets & real-time communication',
+        'CI/CD workflows & Docker containerization',
+        'Cloud deployment: Vercel, AWS'
       ]
     },
     {
@@ -128,14 +128,14 @@ const TechMatrix = () => {
 
       {/* Sticky section title */}
       <div className="mb-12 text-left">
-        <div className="text-xs uppercase tracking-widest font-mono font-bold text-amber-600 mb-2">
+        <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-2">
           / Services, Skills &amp; Capabilities
         </div>
         <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
-          What I do <span className="text-amber-500">best?</span>
+          What I do <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">best?</span>
         </h2>
         <p className="text-black/60 text-sm md:text-base leading-relaxed max-w-xl mt-3">
-          I build robust, intelligent software solutions. Leveraging my background in Computer Science and AI, I turn theoretical machine learning concepts into actual, working platforms.
+          I build robust, intelligent software solutions. Leveraging my background in Computer Science and AI, I turn intelligent concepts into production-ready full-stack applications.
         </p>
       </div>
 
@@ -148,8 +148,8 @@ const TechMatrix = () => {
         </div>
 
         {/* Right Column (Allocated space for sticky profile card) */}
-        <div className="lg:col-span-5 hidden lg:block h-[500px] sticky top-[150px]">
-          {/* Handled by fixed positioning inside App.jsx */}
+        <div id="photo-spacer" className="lg:col-span-5 hidden lg:block h-[500px]">
+          {/* Spacer for the fixed profile card */}
         </div>
       </div>
 

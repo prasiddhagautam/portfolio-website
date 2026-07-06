@@ -27,14 +27,14 @@ const SystemShowcase = ({ projects }) => {
         
         {/* Header */}
         <motion.div variants={itemVariants} className="text-left mb-16 space-y-4">
-          <div className="text-xs uppercase tracking-widest font-mono font-bold text-amber-600">
+          <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-1">
             / Portfolio &amp; Projects
           </div>
           <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
-            Featured <span className="text-amber-500">Work</span>
+            Featured <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">Work</span>
           </h2>
           <p className="text-black/60 max-w-xl text-sm md:text-base leading-relaxed">
-            A curated selection of deep learning systems, concurrent databases, real-time software, and full-stack solutions.
+            A curated selection of intelligent AI applications, concurrent databases, real-time software, and full-stack solutions.
           </p>
         </motion.div>
 

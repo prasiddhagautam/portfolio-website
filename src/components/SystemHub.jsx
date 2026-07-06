@@ -81,11 +81,11 @@ const SystemHub = ({ contactInfo }) => {
         {/* Header */}
         <div className="grid md:grid-cols-12 gap-8 items-end border-b border-black/10 pb-12 text-left">
           <motion.div variants={itemVariants} className="md:col-span-7 space-y-4">
-            <div className="text-xs uppercase tracking-widest font-mono font-bold text-amber-600">
+            <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-1">
               / Connect &amp; Collaborate
             </div>
             <h2 className="text-4xl sm:text-6xl font-black leading-none tracking-tighter text-black">
-              Let's work <span className="text-amber-500">together.</span>
+              Let's work <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">together.</span>
             </h2>
           </motion.div>
           

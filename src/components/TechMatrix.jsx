@@ -13,11 +13,9 @@ const StackingCard = ({ card, idx }) => {
 
   // Interpolate scale down, fade, and slight vertical translation when stacked over
   // Exit scale is 0.9 and exit opacity is 0.1 to make the card underneath invisible once fully covered
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.1]);
-  const yOffset = useTransform(scrollYProgress, [0, 1], [0, -25]);
-
-  const Icon = card.icon;
+  const scale = useTransform(scrollYProgress, [0, 0.8], [1, 0.9]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.1]);
+  const yOffset = useTransform(scrollYProgress, [0, 0.8], [0, -30]);
 
   return (
     <div
@@ -33,76 +31,95 @@ const StackingCard = ({ card, idx }) => {
           opacity,
           y: yOffset,
         }}
-        className="bg-white border border-black/10 p-8 rounded-[2rem] shadow-[0_15px_35px_rgba(0,0,0,0.06)] hover:shadow-2xl transition-shadow duration-300 text-left relative group cursor-pointer"
+        className="bg-white p-8 sm:p-10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.08)] transition-all duration-300 text-left relative group border border-black/[0.04]"
       >
-        {/* Accent Tag */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="text-xs font-mono font-bold text-amber-600 uppercase tracking-widest">
-            Capabilities
-          </div>
-          <div className="text-3xl font-black text-black/10 font-mono">
-            {card.num}
-          </div>
+        {/* Soft-grey italic mono label at the top */}
+        <div className="text-[11px] font-mono italic font-semibold text-black/45 mb-2 uppercase tracking-wider">
+          {card.label}
         </div>
 
-        {/* Title */}
-        <h3 className="text-2xl font-black text-black flex items-center space-x-3 mb-3">
-          <div className="p-2 rounded-xl bg-black/5 text-black group-hover:bg-amber-500 group-hover:text-black transition-colors duration-300">
-            <Icon size={20} />
-          </div>
+        {/* Index & Title merged */}
+        <h3 className="text-xl sm:text-2xl font-black text-black tracking-tight mb-4 flex items-center space-x-2">
+          <span>{card.num}.</span>
           <span>{card.title}</span>
         </h3>
 
-        {/* Description */}
-        <p className="text-black/60 text-sm mb-6 leading-relaxed">
+        {/* Description paragraph */}
+        <p className="text-black/55 text-xs sm:text-sm leading-relaxed mb-6 font-medium">
           {card.description}
         </p>
 
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-1.5">
-          {card.tech.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs font-mono font-medium bg-black/5 hover:bg-amber-500/10 hover:text-amber-600 text-black/75 px-3 py-1 rounded-full transition-colors duration-300"
-            >
-              {tag}
-            </span>
+        {/* Vertical list of detailed sub-skills (bullet points) */}
+        <ul className="space-y-2 mt-4 pl-1">
+          {card.points.map((point) => (
+            <li key={point} className="text-xs text-black/70 flex items-start space-x-2 font-medium">
+              <span className="text-amber-500 font-bold mt-0.5">•</span>
+              <span>{point}</span>
+            </li>
           ))}
-        </div>
+        </ul>
       </motion.div>
     </div>
   );
 };
 
-const TechMatrix = ({ skills }) => {
+const TechMatrix = () => {
   const cardsData = [
     {
       num: '01',
+      label: 'Model Driven',
       title: 'AI & LLM Architecture',
       description: 'Designing retrieval-augmented systems, agent orchestration, and custom model prompt setups.',
-      icon: Brain,
-      tech: skills['AI & LLM Architecture'] || [],
+      points: [
+        'LLMs, OpenAI API, Anthropic Claude',
+        'Retrieval-Augmented Generation (RAG)',
+        'Agent orchestration & LangChain / AutoGen',
+        'Vector databases: Pinecone, ChromaDB',
+        'Custom model prompt engineering & tuning',
+        'Multi-agent systems & autonomous workflows'
+      ]
     },
     {
       num: '02',
-      title: 'Data Intelligence & Computer Vision',
+      label: 'Analytical Core',
+      title: 'Data Intelligence & CV',
       description: 'Building machine learning datasets, video sequence detection pipelines, and spectral models.',
-      icon: Eye,
-      tech: skills['Data Intelligence & CV'] || [],
+      points: [
+        'PyTorch, TensorFlow, Scikit-Learn',
+        'Deep learning model training & optimization',
+        'Computer vision: OpenCV, YOLO models',
+        'Dataset preprocessing & augmentation',
+        'Neural audio & signal processing',
+        'Spectral inference & signal processing'
+      ]
     },
     {
       num: '03',
+      label: 'System Engineering',
       title: 'Full-Stack & Core Systems',
       description: 'Writing scalable interfaces, concurrent databases, and backend automation CLI systems.',
-      icon: Cpu,
-      tech: skills['Core & Full-Stack'] || [],
+      points: [
+        'Python scripting, concurrency, asyncio',
+        'JavaScript, React, Tailwind CSS layouts',
+        'Node.js, Express, REST API pipelines',
+        'Database design: PostgreSQL, MongoDB',
+        'Command line tools & shell bash scripting',
+        'CI/CD pipelines & Docker containerization'
+      ]
     },
     {
       num: '04',
+      label: 'Creative Interface',
       title: 'Product Design & Experience',
       description: 'Crafting premium interactive mockups, animations, and clean portfolio layouts.',
-      icon: Palette,
-      tech: skills['Product Design & Experience'] || [],
+      points: [
+        'User interface (UI) & user experience (UX)',
+        'Interactive motion graphics & canvas renders',
+        'Typography, layout, and visual brand identity',
+        'Clean glassmorphism & responsive grid layouts',
+        'Subtle micro-animations & spring transforms',
+        'SEO optimization & web loading performance'
+      ]
     }
   ];
 

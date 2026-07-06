@@ -69,8 +69,7 @@ function App() {
   const [preloaderDone, setPreloaderDone] = useState(false);
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
-
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 768 : false);
 
   useEffect(() => {
     // Custom timeline greetings sequence:
@@ -98,7 +97,7 @@ function App() {
     const preloaderTimer = setTimeout(() => setPreloaderDone(true), 4200);
 
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024); // Desktop layout is active for screen widths >= 1024px
+      setIsDesktop(window.innerWidth >= 768); // Matches the md layout breakpoint!
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -122,11 +121,11 @@ function App() {
 
   // y translation coordinates:
   // - 0 to 700: floats from hero center to right column of TechMatrix (480px displacement)
-  // - 700 to 2400: moves down matching screen scroll to stay STICKY relative to viewport
-  // - 2400 to 2900: remains constant so the card scrolls up naturally with the rest of the page
-  const cardY = useTransform(scrollY, [0, 700, 2400, 2900], [0, isDesktop ? 480 : 0, isDesktop ? 2180 : 0, isDesktop ? 2180 : 0]);
+  // - 700 to 1900: moves down matching screen scroll to stay STICKY relative to viewport
+  // - 1900 to 2400: remains constant so the card scrolls up naturally with the rest of the page
+  const cardY = useTransform(scrollY, [0, 700, 1900, 2400], [0, isDesktop ? 480 : 0, isDesktop ? 1680 : 0, isDesktop ? 1680 : 0]);
 
-  const cardX = useTransform(scrollY, [0, 700], [0, isDesktop ? 295 : 0]);
+  const cardX = useTransform(scrollY, [0, 700], [0, isDesktop ? '26.5vw' : '0vw']);
   const cardScale = useTransform(scrollY, [0, 700], [1, isDesktop ? 0.85 : 1]);
   const cardRotateZ = useTransform(scrollY, [0, 700], [0, isDesktop ? 6 : 0]);
 
@@ -189,17 +188,17 @@ function App() {
           </div>
 
           {/* Symmetrical Layout aligned items-start so PRASIDDHA and GAUTAM line up perfectly */}
-          <div className="flex flex-col lg:flex-row justify-between items-start w-full relative z-10 py-4 gap-10 lg:gap-12">
+          <div className="flex flex-col md:flex-row justify-between items-start w-full relative z-10 py-4 gap-8 md:gap-10">
 
-            {/* Left Column (flex-1 dynamically scales, with padding-right buffer) */}
-            <div className="w-full lg:flex-1 flex flex-col text-left space-y-4 md:space-y-6 lg:pr-8 lg:pt-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-800 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] select-none whitespace-nowrap">
+            {/* Left Column (flex-1 dynamically scales, with padding-right buffer, centered on mobile/tablet) */}
+            <div className="w-full md:flex-1 flex flex-col items-center text-center md:items-start md:text-left space-y-4 md:space-y-6 md:pr-4 lg:pr-8 lg:pt-2">
+              <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-black leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-800 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] select-none whitespace-nowrap">
                 PRASIDDHA
               </h1>
               <p className="text-black/60 max-w-sm text-sm leading-relaxed">
                 {personalInfo.tagline}
               </p>
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
                 <a
                   href="https://kamauchanepali.com/tip/prish_op/"
                   target="_blank"
@@ -219,10 +218,10 @@ function App() {
             </div>
 
             {/* Center: Scroll-Linked Photo Card (Size 320x430) */}
-            <div className="w-[320px] h-[430px] shrink-0 flex justify-center items-center relative z-30 lg:pt-2">
+            <div className="w-[280px] md:w-[320px] h-[380px] md:h-[430px] shrink-0 flex justify-center items-center relative z-30 lg:pt-2">
 
-              {/* Motion Graphic spinning rings behind photo card */}
-              <div className="absolute inset-0 flex items-center justify-center -z-10 opacity-35 pointer-events-none scale-[1.35] select-none">
+              {/* Motion Graphic spinning rings behind photo card (Desktop Only to prevent layout stretching on mobile) */}
+              <div className="hidden lg:flex absolute inset-0 items-center justify-center -z-10 opacity-35 pointer-events-none scale-[1.35] select-none">
                 <div className="absolute w-[440px] h-[440px] rounded-full border border-dashed border-amber-500/25 animate-[spin_60s_linear_infinite]" />
                 <div className="absolute w-[380px] h-[380px] rounded-full border-2 border-double border-black/5 animate-[spin_35s_linear_infinite_reverse]" />
                 <div className="absolute w-[310px] h-[310px] rounded-full border border-dotted border-amber-600/30 animate-[spin_18s_linear_infinite]" />
@@ -261,7 +260,7 @@ function App() {
                       ease: "easeInOut"
                     }
                   }}
-                  className="w-[320px] h-[430px] relative cursor-pointer select-none rounded-[2rem] overflow-hidden shadow-xl"
+                  className="w-[280px] md:w-[320px] h-[380px] md:h-[430px] relative cursor-pointer select-none rounded-[2rem] overflow-hidden shadow-xl"
                 >
                   <img
                     src={personalInfo.avatar}
@@ -272,16 +271,16 @@ function App() {
               </motion.div>
             </div>
 
-            {/* Right Column (flex-1 dynamically scales, with padding-left buffer) */}
-            <div className="w-full lg:flex-1 flex flex-col text-right items-end space-y-4 md:space-y-6 lg:pl-8 lg:pt-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black leading-none tracking-tighter select-none text-transparent bg-clip-text bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-800 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] whitespace-nowrap">
+            {/* Right Column (flex-1 dynamically scales, with padding-left buffer, centered on mobile/tablet) */}
+            <div className="w-full md:flex-1 flex flex-col items-center text-center md:items-end md:text-right space-y-4 md:space-y-6 md:pl-4 lg:pl-8 lg:pt-2">
+              <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-black leading-none tracking-tighter select-none text-transparent bg-clip-text bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-800 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] whitespace-nowrap">
                 GAUTAM
               </h1>
 
               <div className="bg-white border border-black/5 px-6 py-4 rounded-[2rem] shadow-sm text-left w-full max-w-xs space-y-2">
                 <div className="text-[10px] uppercase font-mono tracking-widest text-black/40">Core Expertise</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {["PyTorch", "Deep Learning", "LLMs", "RVC Audio"].map((item) => (
+                <div className="flex flex-wrap justify-center md:justify-start lg:justify-start gap-1.5">
+                  {["PyTorch", "Deep Learning", "LLMs", "Python", "Computer Vision", "NLP", "Agentic AI"].map((item) => (
                     <span key={item} className="text-[10px] font-semibold bg-black/5 text-black px-2 py-0.5 rounded-full">
                       {item}
                     </span>

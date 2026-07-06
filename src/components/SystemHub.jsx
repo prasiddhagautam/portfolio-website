@@ -66,7 +66,7 @@ const SystemHub = ({ contactInfo }) => {
   ];
 
   return (
-    <section id="contact" className="py-24 relative max-w-7xl mx-auto px-6 md:px-12 bg-white text-black border border-black/10 rounded-[3rem] my-12 mx-4 md:mx-12 overflow-hidden shadow-sm">
+    <section id="contact" className="py-24 relative max-w-7xl mx-4 lg:mx-auto px-6 md:px-12 bg-white text-black border border-black/10 rounded-[3rem] my-12 overflow-hidden shadow-sm">
       
       {/* Decorative ambient footer glow */}
       <div className="absolute -bottom-20 -right-20 w-90 h-90 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -79,17 +79,17 @@ const SystemHub = ({ contactInfo }) => {
         className="space-y-16 relative z-10"
       >
         {/* Header */}
-        <div className="grid md:grid-cols-12 gap-8 items-end border-b border-black/10 pb-12 text-left">
-          <motion.div variants={itemVariants} className="md:col-span-7 space-y-4">
+        <div className="flex flex-col items-center text-center border-b border-black/10 pb-12 space-y-6">
+          <motion.div variants={itemVariants} className="space-y-4">
             <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-1">
-              / Connect &amp; Collaborate
+              Connect &amp; Collaborate
             </div>
             <h2 className="text-4xl sm:text-6xl font-black leading-none tracking-tighter text-black">
               Let's work <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">together.</span>
             </h2>
           </motion.div>
           
-          <motion.div variants={itemVariants} className="md:col-span-5 flex flex-wrap md:justify-end gap-3">
+          <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-3">
             <a
               href="/assets/cv/Prasiddhagautam_CV.pdf"
               target="_blank"

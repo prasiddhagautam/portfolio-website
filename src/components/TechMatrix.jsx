@@ -129,7 +129,7 @@ const TechMatrix = () => {
       {/* Sticky section title */}
       <div className="mb-12 text-left">
         <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-2">
-          / Services, Skills &amp; Capabilities
+          Services, Skills &amp; Capabilities
         </div>
         <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
           What I do <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">best?</span>

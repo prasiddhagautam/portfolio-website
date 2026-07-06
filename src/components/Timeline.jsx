@@ -47,7 +47,7 @@ const Timeline = ({ education }) => {
         {/* Header */}
         <motion.div variants={itemVariants} className="text-center mb-12 space-y-4">
           <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-1">
-            / Academics &amp; Qualifications
+            Academics &amp; Qualifications
           </div>
           <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight text-center">
             My <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">Education</span>
@@ -153,7 +153,7 @@ const Timeline = ({ education }) => {
           <div className="flex items-center gap-3 text-left">
             <CheckCircle className="text-amber-500 w-5 h-5 flex-shrink-0" />
             <p className="text-black/75 text-xs md:text-sm font-semibold">
-              Actively seeking internship and collaboration opportunities in AI, Full Stack development, and software systems.
+              Actively seeking job and collaboration opportunities in AI, Full Stack development, and Software Systems.
             </p>
           </div>
           <a

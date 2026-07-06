@@ -33,7 +33,7 @@ const CoreProfile = ({ data, achievements }) => {
           {/* Biography Section */}
           <div className="space-y-6">
             <div className="text-sm sm:text-base uppercase tracking-widest font-lostlate font-bold text-amber-600 mb-1">
-              / About, Bio &amp; Career Objective
+              About, Bio &amp; Career Objective
             </div>
             <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
               My <span className="text-amber-500 font-spark font-normal text-5xl sm:text-6xl md:text-7xl ml-2 inline-block relative -top-[0.08em] transform -rotate-2">Story</span>

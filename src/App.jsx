@@ -10,7 +10,7 @@ import SystemShowcase from './components/SystemShowcase';
 import Timeline from './components/Timeline';
 import SystemHub from './components/SystemHub';
 import ScrollToTop from './components/ScrollToTop';
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValue } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, animate } from 'framer-motion';
 import { ArrowDownRight } from 'lucide-react';
 
 const TimeWidget = () => {
@@ -69,7 +69,7 @@ function App() {
   const [preloaderDone, setPreloaderDone] = useState(false);
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 768 : false);
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 1024 : false);
   const [isHovered, setIsHovered] = useState(false);
   const [isStitched, setIsStitched] = useState(false);
   const [positionState, setPositionState] = useState('absolute');
@@ -104,7 +104,7 @@ function App() {
     const preloaderTimer = setTimeout(() => setPreloaderDone(true), 4200);
 
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768); // Matches the md layout breakpoint!
+      setIsDesktop(window.innerWidth >= 1024); // Matches the lg layout breakpoint!
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -248,27 +248,33 @@ function App() {
     scrollY,
     [
       0, 
-      Math.max(1, t1 - 100), 
-      Math.max(2, t1 - 50), 
-      Math.max(3, t2), 
-      Math.max(4, t2 + 50), 
-      Math.max(5, t3)
+      Math.max(1, t1 * 0.4),
+      Math.max(2, t1 - 100), 
+      Math.max(3, t1 - 50), 
+      Math.max(4, t2), 
+      Math.max(5, t2 + 50), 
+      Math.max(6, t2 + (t3 - t2) * 0.5),
+      Math.max(7, t3)
     ],
     [
       0, 
+      isDesktop ? -15 : 0,  // bank left during flight 1
       0, 
-      180, 
+      180,                  // snap flip 1
       180,
-      360,
+      360,                  // snap flip 2
+      isDesktop ? 375 : 360,// bank right during flight 2
       360
     ]
   );
 
-  // Mouse tilt variables
+  // Mouse tilt variables with spring smoothing physics
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
-  const rotateX = useTransform(tiltY, [-0.5, 0.5], [15, -15]);
-  const rotateY = useTransform(tiltX, [-0.5, 0.5], [-15, 15]);
+  const tiltXSpring = useSpring(tiltX, { stiffness: 150, damping: 20 });
+  const tiltYSpring = useSpring(tiltY, { stiffness: 150, damping: 20 });
+  const rotateX = useTransform(tiltYSpring, [-0.5, 0.5], [15, -15]);
+  const rotateY = useTransform(tiltXSpring, [-0.5, 0.5], [-15, 15]);
   const [glareStyle, setGlareStyle] = useState({ opacity: 0, background: '' });
 
   const handleMouseMove = (e) => {
@@ -295,6 +301,29 @@ function App() {
     tiltY.set(0);
     setGlareStyle({ opacity: 0, background: '' });
   };
+
+  useEffect(() => {
+    if (isHovered || !isDesktop) return;
+
+    // Animate tiltX in a gentle wave
+    const controlsX = animate(tiltX, [0, 0.12, -0.12, 0.08, 0], {
+      duration: 8,
+      repeat: Infinity,
+      ease: "easeInOut"
+    });
+
+    // Animate tiltY in a gentle wave
+    const controlsY = animate(tiltY, [0, -0.12, 0.12, -0.08, 0], {
+      duration: 7,
+      repeat: Infinity,
+      ease: "easeInOut"
+    });
+
+    return () => {
+      controlsX.stop();
+      controlsY.stop();
+    };
+  }, [isHovered, isDesktop, tiltX, tiltY]);
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
@@ -370,7 +399,7 @@ function App() {
           className="w-[280px] sm:w-[300px] md:w-[360px] h-[370px] sm:h-[400px] md:h-[480px] relative cursor-pointer select-none rounded-[2rem] shadow-2xl group"
         >
           {/* Rotating Gradient Background Glow */}
-          <div className="absolute -inset-1.5 rounded-[2rem] bg-gradient-to-r from-amber-500 via-amber-300 to-amber-600 opacity-20 blur-md group-hover:opacity-60 transition-opacity duration-300 -z-10" />
+          <div className="absolute -inset-1.5 rounded-[2rem] bg-gradient-to-r from-amber-500 via-amber-300 to-amber-600 blur-md transition-opacity duration-300 -z-10 animate-pulse-glow" />
 
           {/* SVG Glowing Border Trace Animation */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 rounded-[2rem]">
@@ -431,6 +460,8 @@ function App() {
                   WebkitUserDrag: 'none',
                 }}
               />
+              {/* Soft dark overlay that fades on hover */}
+              <div className="absolute inset-0 bg-black/15 group-hover:bg-black/0 transition-colors duration-500 z-10 pointer-events-none" />
               
               {/* Glossy glare overlay */}
               <motion.div
@@ -481,6 +512,8 @@ function App() {
                   transform: 'scaleX(-1)',
                 }}
               />
+              {/* Soft dark overlay that fades on hover */}
+              <div className="absolute inset-0 bg-black/15 group-hover:bg-black/0 transition-colors duration-500 z-10 pointer-events-none" />
               
               {/* Glossy glare overlay */}
               <motion.div
@@ -602,7 +635,7 @@ function App() {
                 className="w-[280px] sm:w-[300px] md:w-[360px] h-[370px] sm:h-[400px] md:h-[480px] flex justify-center items-center relative lg:pt-2"
               >
                 {/* Motion Graphic spinning rings behind photo card (Desktop Only to prevent layout stretching on mobile) */}
-                <div className="hidden lg:flex absolute inset-0 items-center justify-center -z-10 opacity-35 pointer-events-none scale-[1.35] select-none">
+                <div className="hidden lg:flex absolute inset-0 items-center justify-center z-10 opacity-30 pointer-events-none scale-[1.35] select-none">
                   <div className="absolute w-[440px] h-[440px] rounded-full border border-dashed border-amber-500/25 animate-[spin_60s_linear_infinite]" />
                   <div className="absolute w-[380px] h-[380px] rounded-full border-2 border-double border-black/5 animate-[spin_35s_linear_infinite_reverse]" />
                   <div className="absolute w-[310px] h-[310px] rounded-full border border-dotted border-amber-600/30 animate-[spin_18s_linear_infinite]" />

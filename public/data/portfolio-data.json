@@ -11,9 +11,9 @@
     "avatar": "/assets/images/pfp.jpg"
   },
   "bio": {
-    "summary": "Technical Skills\n\nAI Student and Full Stack Developer currently pursuing a BSc (Hons) in Computer Science with AI at Coventry University. Passionate about artificial intelligence, full-stack development, and building intelligent agentic systems that solve real-world challenges.",
+    "summary": "Technical Skills\n\nAI and Full Stack Developer currently pursuing a BSc (Hons) in Computer Science with AI at Coventry University. Passionate about artificial intelligence, full-stack development, and building intelligent agentic systems that solve real-world challenges.",
     "philosophy": "Teaching machines how to think, mostly so I don't have to do it all myself.",
-    "about": "Technical Skills\n\nAI Student and Full Stack Developer currently pursuing a BSc (Hons) in Computer Science with AI at Coventry University. Passionate about artificial intelligence, full-stack development, and building intelligent agentic systems that solve real-world challenges."
+    "about": "Technical Skills\n\nAI and Full Stack Developer currently pursuing a BSc (Hons) in Computer Science with AI at Coventry University. Passionate about artificial intelligence, full-stack development, and building intelligent agentic systems that solve real-world challenges."
   },
   "achievements": [
     {
@@ -30,7 +30,7 @@
     },
     {
       "title": "Active Collaborator",
-      "description": "Actively seeking internship and collaboration opportunities in AI, Full Stack development, and software engineering."
+      "description": "Actively seeking job and collaboration opportunities in AI, Full Stack development, and Software Systems."
     }
   ],
   "skills": {

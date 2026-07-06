@@ -1,148 +1,106 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Home, Cpu, User, Briefcase, GraduationCap } from 'lucide-react';
 
 const QuantumHeader = ({ visible = true }) => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
-  const [hoveredItem, setHoveredItem] = useState(null)
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-
-      const sections = ['home', 'about', 'skills', 'projects', 'education', 'contact']
-      const scrollPosition = window.scrollY + 100
+      const sections = ['home', 'skills', 'about', 'projects', 'education', 'contact'];
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
 
       for (const section of sections) {
-        const element = document.getElementById(section)
+        const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element
+          const { offsetTop, offsetHeight } = element;
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
+            setActiveSection(section);
+            break;
           }
         }
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
-    { id: 'home',      label: 'Home'      },
-    { id: 'about',     label: 'About'     },
-    { id: 'skills',    label: 'Skills'    },
-    { id: 'projects',  label: 'Projects'  },
-    { id: 'education', label: 'Education' },
-    { id: 'contact',   label: 'Contact'   },
-  ]
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'skills', label: 'Skills', icon: Cpu },
+    { id: 'about', label: 'About', icon: User },
+    { id: 'projects', label: 'Portfolio', icon: Briefcase },
+    { id: 'education', label: 'Education', icon: GraduationCap },
+  ];
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId)
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
-  }
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.nav
-          key="nav"
-          initial={{ y: -80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -80, opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className={`fixed top-0 left-0 right-0 z-[9999] h-16 transition-all duration-300 ${
-            isScrolled
-              ? 'bg-slate-950/80 backdrop-blur-md border-b border-white/10'
-              : 'bg-transparent'
-          }`}
+          initial={{ y: 100, x: '-50%', opacity: 0 }}
+          animate={{ y: 0, x: '-50%', opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 25, delay: 0.3 }}
+          className="fixed bottom-6 left-1/2 z-50 glass-nav rounded-full px-2 py-1.5 flex items-center space-x-1 max-w-[95vw] sm:max-w-max shadow-lg"
         >
-          <div className="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
-            {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-cyan-400 font-mono text-lg font-extrabold relative group cursor-pointer tracking-wider"
-              whileHover={{ scale: 1.05 }}
-              onClick={() => scrollToSection('home')}
-            >
-              <span className="relative z-10">&lt;/&gt;PG</span>
-              <motion.span
-                className="absolute -inset-1 bg-cyan-500/20 rounded blur-sm opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-            </motion.div>
+          {/* Home Icon Button (Mobile & Desktop) */}
+          <button
+            onClick={() => scrollToSection('home')}
+            className={`p-2.5 sm:p-3 rounded-full text-white/70 hover:text-white transition-all ${
+              activeSection === 'home' ? 'bg-white/10 text-white' : ''
+            }`}
+            title="Home"
+          >
+            <Home size={16} className="sm:w-[18px] sm:h-[18px]" />
+          </button>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-2 relative">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index + 0.3, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative"
-                  onMouseEnter={() => setHoveredItem(item.id)}
-                  onMouseLeave={() => setHoveredItem(null)}
-                >
-                  <motion.button
-                    onClick={() => scrollToSection(item.id)}
-                    className={`relative px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 overflow-hidden ${
-                      activeSection === item.id ? 'text-black' : 'text-slate-400 hover:text-white'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <AnimatePresence>
-                      {activeSection === item.id && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.8 }}
-                          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                        />
-                      )}
-                    </AnimatePresence>
+          {/* Core Sections Buttons */}
+          {navItems.slice(1).map((item) => {
+            const Icon = item.icon;
+            const isActive = activeSection === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider relative transition-all duration-300 flex items-center space-x-1.5 ${
+                  isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activePill"
+                    className="absolute inset-0 bg-white/10 rounded-full -z-10"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                
+                {/* Icon on Mobile, Text on Desktop */}
+                <Icon size={14} className="sm:hidden" />
+                <span className="hidden sm:inline">{item.label}</span>
+              </button>
+            );
+          })}
 
-                    <span className="relative z-10">{item.label}</span>
-                  </motion.button>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <motion.a
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="https://kamauchanepali.com/tip/prish_op/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative bg-gradient-to-r from-cyan-500 to-purple-500 text-black px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider transition-all duration-200 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] group overflow-hidden flex items-center"
-            >
-              <span className="relative z-10 flex items-center gap-1">
-                🧀 Buy me a cheese
-              </span>
-            </motion.a>
-          </div>
-
-          {/* Scroll progress bar */}
-          <motion.div
-            className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500"
-            initial={{ width: '0%' }}
-            animate={{ width: isScrolled ? '100%' : '0%' }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-          />
+          {/* Contact Button */}
+          <button
+            onClick={() => scrollToSection('contact')}
+            className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 bg-amber-500 text-black hover:bg-amber-600 hover:scale-105 active:scale-95 ${
+              activeSection === 'contact' ? 'ring-2 ring-white/20' : ''
+            }`}
+          >
+            Contact
+          </button>
         </motion.nav>
       )}
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default QuantumHeader
+export default QuantumHeader;

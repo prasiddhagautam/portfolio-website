@@ -1,158 +1,157 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react';
 
 const NeuralBackground = () => {
-  const canvasRef = useRef(null)
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
 
-    let animationFrameId
-    let width = (canvas.width = window.innerWidth)
-    let height = (canvas.height = window.innerHeight)
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
-    const particles = []
-    const mouse = { x: null, y: null, radius: 150 }
+    const particles = [];
+    const particleCount = Math.min(60, Math.floor((width * height) / 25000)); // Responsive count
+    const connectionDistance = 130;
+    const mouse = { x: null, y: null, radius: 150 };
 
     class Particle {
       constructor() {
-        this.x = Math.random() * width
-        this.y = Math.random() * height
-        // Slow float speed
-        this.vx = (Math.random() - 0.5) * 0.4
-        this.vy = (Math.random() - 0.5) * 0.4
-        this.radius = Math.random() * 2 + 1
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.45;
+        this.vy = (Math.random() - 0.5) * 0.45;
+        this.radius = Math.random() * 2 + 1.5;
       }
 
       update() {
-        this.x += this.vx
-        this.y += this.vy
+        this.x += this.vx;
+        this.y += this.vy;
 
-        // Wrap around boundaries
-        if (this.x < 0) this.x = width
-        if (this.x > width) this.x = 0
-        if (this.y < 0) this.y = height
-        if (this.y > height) this.y = 0
+        // Bounce on boundaries
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        // Gentle reaction to mouse (attraction/push)
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            // Draw towards mouse slightly
+            this.x += (dx / dist) * force * 0.4;
+            this.y += (dy / dist) * force * 0.4;
+          }
+        }
       }
 
       draw() {
-        if (!ctx) return
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(6, 182, 212, 0.4)' // Cyan
-        ctx.fill()
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(239, 135, 0, 0.35)'; // Amber tone
+        ctx.fill();
       }
     }
 
-    // Populate particles based on screen size
-    const particleCount = Math.min(100, Math.floor((width * height) / 15000))
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle())
-    }
-
-    const handleMouseMove = (e) => {
-      mouse.x = e.clientX
-      mouse.y = e.clientY
-    }
-
-    const handleMouseLeave = () => {
-      mouse.x = null
-      mouse.y = null
-    }
+    const init = () => {
+      particles.length = 0;
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    };
 
     const handleResize = () => {
-      width = canvas.width = window.innerWidth
-      height = canvas.height = window.innerHeight
-    }
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      init();
+    };
 
-    let isPaused = false
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
 
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        isPaused = true
-        cancelAnimationFrame(animationFrameId)
-      } else {
-        if (isPaused) {
-          isPaused = false
-          animate()
-        }
-      }
-    }
+    const handleMouseLeave = () => {
+      mouse.x = null;
+      mouse.y = null;
+    };
 
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseleave', handleMouseLeave)
-    window.addEventListener('resize', handleResize)
-    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+
+    init();
 
     const animate = () => {
-      if (isPaused) return
-      ctx.clearRect(0, 0, width, height)
+      ctx.clearRect(0, 0, width, height);
 
-      // Draw connections
+      // Draw connections first (behind particles)
       for (let i = 0; i < particles.length; i++) {
-        const p1 = particles[i]
-        p1.update()
-        p1.draw()
-
-        // Connect particles
         for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j]
-          const dx = p1.x - p2.x
-          const dy = p1.y - p2.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 100) {
-            const alpha = (100 - dist) / 100 * 0.15
-            ctx.beginPath()
-            ctx.moveTo(p1.x, p1.y)
-            ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})` // Violet connections
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        }
-
-        // Connect to mouse cursor
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = p1.x - mouse.x
-          const dy = p1.y - mouse.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-
-          if (dist < mouse.radius) {
-            const alpha = (mouse.radius - dist) / mouse.radius * 0.25
-            ctx.beginPath()
-            ctx.moveTo(p1.x, p1.y)
-            ctx.lineTo(mouse.x, mouse.y)
-            ctx.strokeStyle = `rgba(6, 182, 212, ${alpha})` // Cyan highlights to mouse
-            ctx.lineWidth = 0.8
-            ctx.stroke()
+          if (dist < connectionDistance) {
+            const alpha = (1 - dist / connectionDistance) * 0.15;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(12, 12, 12, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
           }
         }
       }
 
-      animationFrameId = requestAnimationFrame(animate)
-    }
+      // Update and draw particles
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
+      });
 
-    animate()
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
 
     return () => {
-      cancelAnimationFrame(animationFrameId)
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseleave', handleMouseLeave)
-      window.removeEventListener('resize', handleResize)
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-    }
-  }, [])
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 0, background: '#0a0a0f' }}
-    />
-  )
-}
+    <div className="fixed inset-0 w-full h-full -z-10 bg-[#eaeaea] overflow-hidden pointer-events-none">
+      {/* Premium subtle grid overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #000 1px, transparent 1px),
+            linear-gradient(to bottom, #000 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+        }}
+      />
+      {/* CSS Ambient Blobs */}
+      <div 
+        className="fluid-blob bg-amber-500/10 w-[500px] h-[500px] -top-20 -left-20"
+        style={{ animationDelay: '0s', animationDuration: '30s' }}
+      />
+      <div 
+        className="fluid-blob bg-gray-400/20 w-[600px] h-[600px] bottom-10 right-10"
+        style={{ animationDelay: '5s', animationDuration: '35s' }}
+      />
+      {/* Floating Canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+    </div>
+  );
+};
 
-export default NeuralBackground
+export default NeuralBackground;

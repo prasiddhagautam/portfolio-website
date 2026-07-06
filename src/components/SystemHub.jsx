@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { Mail, Github, Linkedin, MapPin, ArrowUpRight, Clock, Instagram, Facebook, Youtube, MessageSquare } from 'lucide-react'
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Mail, Github, Linkedin, MapPin, ArrowUpRight, Clock, Instagram, Facebook, Youtube, FileText } from 'lucide-react';
 
 const DiscordIcon = ({ className }) => (
   <svg
@@ -14,172 +14,190 @@ const DiscordIcon = ({ className }) => (
 );
 
 const SystemHub = ({ contactInfo }) => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  }
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-  }
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+  };
 
-  const socialMediaList = [
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+
+  const socialLinks = [
     {
       icon: Github,
       label: 'GitHub',
-      value: '@prasiddhagautam',
       href: 'https://github.com/prasiddhagautam',
-      color: 'text-cyan-400 border-cyan-500/20 hover:border-cyan-500/40 bg-cyan-500/5',
-      glow: 'hover:shadow-[0_0_15px_rgba(6,182,212,0.1)]',
+      value: '@prasiddhagautam'
     },
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      value: 'Prasiddha Gautam',
       href: 'https://linkedin.com/in/prasiddhagautam',
-      color: 'text-blue-400 border-blue-500/20 hover:border-blue-500/40 bg-blue-500/5',
-      glow: 'hover:shadow-[0_0_15px_rgba(59,130,246,0.1)]',
+      value: 'prasiddhagautam'
     },
     {
       icon: Instagram,
       label: 'Instagram',
-      value: '@prishhhhhhh_',
       href: 'https://instagram.com/prishhhhhhh_',
-      color: 'text-pink-400 border-pink-500/20 hover:border-pink-500/40 bg-pink-500/5',
-      glow: 'hover:shadow-[0_0_15px_rgba(236,72,153,0.1)]',
+      value: '@prishhhhhhh_'
     },
     {
       icon: Facebook,
       label: 'Facebook',
-      value: 'Prasiddha Gautam',
       href: 'https://facebook.com/prasiddha.gautam01',
-      color: 'text-indigo-400 border-indigo-500/20 hover:border-indigo-500/40 bg-indigo-500/5',
-      glow: 'hover:shadow-[0_0_15px_rgba(99,102,241,0.1)]',
+      value: 'prasiddha.gautam01'
     },
     {
       icon: DiscordIcon,
       label: 'Discord',
-      value: 'prasiddha#7890',
       href: 'https://discordapp.com/users/962704145234669570',
-      color: 'text-purple-400 border-purple-500/20 hover:border-purple-500/40 bg-purple-500/5',
-      glow: 'hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]',
+      value: 'prasiddha#7890'
     },
     {
       icon: Youtube,
-      label: 'Youtube',
-      value: 'Prish OP',
+      label: 'YouTube',
       href: 'https://youtube.com/prishop',
-      color: 'text-red-400 border-red-500/20 hover:border-red-500/40 bg-red-500/5',
-      glow: 'hover:shadow-[0_0_15px_rgba(239,68,68,0.1)]',
-    },
-  ]
+      value: 'Prish OP'
+    }
+  ];
 
   return (
-    <section id="contact" className="py-16 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-        <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
+    <section id="contact" className="py-24 relative max-w-7xl mx-auto px-6 md:px-12 bg-white text-black border border-black/10 rounded-[3rem] my-12 mx-4 md:mx-12 overflow-hidden shadow-sm">
+      
+      {/* Decorative ambient footer glow */}
+      <div className="absolute -bottom-20 -right-20 w-90 h-90 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-3">
-              Find me on <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Social Media</span>
-            </h2>
-            <div className="w-12 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full" />
-          </motion.div>
-
-          {/* Social media grid */}
-          <motion.div variants={itemVariants} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-            {socialMediaList.map(item => {
-              const Icon = item.icon
-              return (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`group flex items-center p-5 bg-[#0b0c10]/60 border backdrop-blur-md rounded-2xl ${item.color} ${item.glow} transition-all duration-300 relative`}
-                >
-                  <div className="w-10 h-10 border border-white/5 bg-white/5 rounded-xl flex items-center justify-center mr-4">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div className="flex flex-col text-left">
-                    <span className="text-[10px] text-slate-500 font-mono tracking-wider uppercase">{item.label}</span>
-                    <span className="text-sm font-semibold text-slate-300 group-hover:text-white transition-colors">{item.value}</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </motion.a>
-              )
-            })}
-          </motion.div>
-
-          {/* Location + Contact details */}
-          <div className="grid md:grid-cols-3 gap-5">
-            <motion.a
-              variants={itemVariants}
-              href={`mailto:${contactInfo.email}`}
-              className="bg-[#0b0c10]/60 border border-white/10 rounded-2xl p-5 flex items-start space-x-4 hover:border-cyan-500/20 transition-all duration-300"
-            >
-              <div className="flex-shrink-0 w-10 h-10 bg-cyan-500/10 border border-cyan-500/20 rounded-xl flex items-center justify-center">
-                <Mail className="w-5 h-5 text-cyan-400" />
-              </div>
-              <div className="text-left">
-                <p className="text-[10px] text-slate-500 font-mono uppercase">Direct Email</p>
-                <p className="text-white font-bold text-sm mt-0.5">{contactInfo.email}</p>
-                <p className="text-slate-400 text-xs mt-1">Send an email message anytime</p>
-              </div>
-            </motion.a>
-
-            <motion.div
-              variants={itemVariants}
-              className="bg-[#0b0c10]/60 border border-white/10 rounded-2xl p-5 flex items-start space-x-4 hover:border-purple-500/20 transition-all duration-300"
-            >
-              <div className="flex-shrink-0 w-10 h-10 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-purple-400" />
-              </div>
-              <div className="text-left">
-                <p className="text-[10px] text-slate-500 font-mono uppercase">Location</p>
-                <p className="text-white font-bold text-sm mt-0.5">{contactInfo.location}</p>
-                <p className="text-slate-400 text-xs mt-1">Open to remote and local roles</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="bg-[#0b0c10]/60 border border-white/10 rounded-2xl p-5 flex items-start space-x-4 hover:border-pink-500/20 transition-all duration-300"
-            >
-              <div className="flex-shrink-0 w-10 h-10 bg-pink-500/10 border border-pink-500/20 rounded-xl flex items-center justify-center">
-                <Clock className="w-5 h-5 text-pink-400" />
-              </div>
-              <div className="text-left">
-                <p className="text-[10px] text-slate-500 font-mono uppercase">Response Time</p>
-                <p className="text-white font-bold text-sm mt-0.5">Within 24 hours</p>
-                <p className="text-slate-400 text-xs mt-1">Quick communications guaranteed</p>
-              </div>
-            </motion.div>
-          </div>
-
-        </motion.div>
-      </div>
-
-      {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ delay: 0.8 }}
-        className="mt-16 border-t border-white/10"
+      <motion.div 
+        ref={ref} 
+        variants={containerVariants} 
+        initial="hidden" 
+        animate={inView ? 'visible' : 'hidden'}
+        className="space-y-16 relative z-10"
       >
-        <div className="max-w-6xl mx-auto px-8 py-6 text-center">
-          <p className="text-slate-500 text-[10px] md:text-xs font-mono">
-            © 2026 {contactInfo.name}.
-          </p>
+        {/* Header */}
+        <div className="grid md:grid-cols-12 gap-8 items-end border-b border-black/10 pb-12 text-left">
+          <motion.div variants={itemVariants} className="md:col-span-7 space-y-4">
+            <div className="text-xs uppercase tracking-widest font-mono font-bold text-amber-600">
+              / Connect &amp; Collaborate
+            </div>
+            <h2 className="text-4xl sm:text-6xl font-black leading-none tracking-tighter text-black">
+              Let's work <span className="text-amber-500">together.</span>
+            </h2>
+          </motion.div>
+          
+          <motion.div variants={itemVariants} className="md:col-span-5 flex flex-wrap md:justify-end gap-3">
+            <a
+              href="/assets/cv/Prasiddhagautam_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-2 border border-black/10 hover:border-black/35 hover:bg-black/5 text-black px-5 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors duration-300"
+            >
+              <FileText size={14} className="text-amber-500" />
+              <span>Download CV</span>
+            </a>
+            <a
+              href={`mailto:${contactInfo.email}`}
+              className="inline-flex items-center space-x-2 bg-amber-500 hover:bg-amber-600 text-black px-5 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest transition-colors duration-300"
+            >
+              <span>Get in Touch</span>
+              <ArrowUpRight size={14} />
+            </a>
+          </motion.div>
         </div>
-      </motion.footer>
-    </section>
-  )
-}
 
-export default SystemHub
+        {/* Contact Links & Details */}
+        <div className="grid lg:grid-cols-12 gap-12 text-left">
+          
+          {/* Big Email Layout */}
+          <motion.div variants={itemVariants} className="lg:col-span-6 space-y-6">
+            <div className="space-y-2">
+              <div className="text-[10px] uppercase font-mono tracking-widest text-black/50">Direct Inquiries</div>
+              <a 
+                href={`mailto:${contactInfo.email}`}
+                className="text-xl sm:text-3xl font-bold text-black hover:text-amber-600 transition-colors break-all font-sans"
+              >
+                {contactInfo.email}
+              </a>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6 pt-4">
+              <div className="flex items-start space-x-3.5 p-4 rounded-2xl bg-black/[0.01] border border-black/5">
+                <div className="p-2.5 rounded-xl bg-black/5 text-amber-600 mt-0.5">
+                  <MapPin size={16} />
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase font-mono tracking-widest text-black/50">Location</div>
+                  <div className="text-sm font-semibold mt-0.5 text-black">{contactInfo.location}</div>
+                  <div className="text-xs text-black/50 mt-0.5">Open to Remote / Relocation</div>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3.5 p-4 rounded-2xl bg-black/[0.01] border border-black/5">
+                <div className="p-2.5 rounded-xl bg-black/5 text-amber-600 mt-0.5">
+                  <Clock size={16} />
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase font-mono tracking-widest text-black/50">Response Time</div>
+                  <div className="text-sm font-semibold mt-0.5 text-black">Within 24 Hours</div>
+                  <div className="text-xs text-black/50 mt-0.5">Quick communication guaranteed</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Socials Grid */}
+          <motion.div variants={itemVariants} className="lg:col-span-6 space-y-4">
+            <div className="text-[10px] uppercase font-mono tracking-widest text-black/50">On the Web</div>
+            
+            <div className="grid sm:grid-cols-2 gap-4">
+              {socialLinks.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 rounded-2xl border border-black/10 bg-black/[0.01] hover:bg-black/[0.04] hover:border-black/20 transition-all duration-300 group"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 rounded-xl bg-black/5 text-black/60 group-hover:bg-amber-500/10 group-hover:text-amber-600 transition-colors">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[9px] uppercase font-mono text-black/50">{item.label}</span>
+                        <span className="text-xs font-semibold text-black/80 mt-0.5 group-hover:text-black transition-colors">{item.value}</span>
+                      </div>
+                    </div>
+                    <ArrowUpRight size={12} className="text-black/20 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  </a>
+                );
+              })}
+            </div>
+          </motion.div>
+
+        </div>
+
+        {/* Footer info */}
+        <motion.div 
+          variants={itemVariants}
+          className="border-t border-black/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-black/40 font-mono space-y-4 md:space-y-0"
+        >
+          <div>
+            © 2026 Prasiddha Gautam. All rights reserved.
+          </div>
+          <div>
+            Kathmandu, Nepal.
+          </div>
+        </motion.div>
+
+      </motion.div>
+    </section>
+  );
+};
+
+export default SystemHub;

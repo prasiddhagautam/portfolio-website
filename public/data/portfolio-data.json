@@ -1,7 +1,7 @@
 {
   "personalInfo": {
     "name": "Prasiddha Gautam",
-    "title": "AI Student & Python Developer",
+    "title": "AI/ML & Python Developer",
     "tagline": "Passionate about machine learning, deep learning, and building intelligent systems that solve real-world problems.",
     "location": "Kathmandu, Nepal",
     "website": "github.com/prasiddhagautam",
@@ -34,8 +34,8 @@
     }
   ],
   "skills": {
-    "Languages": ["Python", "JavaScript", "TypeScript", "C#", "SQL", "HTML/CSS"],
-    "Core & Full-Stack": ["Python", "JavaScript", "TypeScript", "Next.js", "Node.js", "Linux", "Git & GitHub", "REST APIs"],
+    "Languages": ["Python", "JavaScript", "TypeScript", "C#", "C++", "Java", "Bash/Shell", "SQL", "HTML/CSS"],
+    "Core & Full-Stack": ["Python", "JavaScript", "TypeScript", "C++", "Next.js", "Node.js", "Linux", "Git & GitHub", "REST APIs"],
     "AI & LLM Architecture": ["RAG", "LLM Orchestration", "LangChain / Dify", "Vector Databases", "Token Optimization", "Prompt Engineering", "PyTorch"],
     "Data Intelligence & CV": ["Deep Learning", "Computer Vision", "Data Pipelines (ETL)", "Vector Embeddings", "Pandas", "NumPy", "OpenCV"],
     "Product Design & Experience": ["Figma", "UI/UX Design", "Motion Design", "Video Editing", "Interactive Media"],

@@ -38,3 +38,7 @@ yarn-error.log*
 
 # custom workspace folders
 /backup
+/backup_src_original
+
+.vercel
+.env*

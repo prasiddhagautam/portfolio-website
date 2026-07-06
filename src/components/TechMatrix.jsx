@@ -1,151 +1,143 @@
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { Code, Server, Brain, Eye, Palette, Database } from 'lucide-react'
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Brain, Eye, Cpu, Palette } from 'lucide-react';
 
-const categoryIcons = {
-  Languages: Code,
-  'Core & Full-Stack': Server,
-  'AI & LLM Architecture': Brain,
-  'Data Intelligence & CV': Eye,
-  'Product Design & Experience': Palette,
-  'Databases & Cloud': Database,
-}
+const StackingCard = ({ card, idx }) => {
+  const cardRef = useRef(null);
 
-const categoryColors = {
-  Languages: 'from-cyan-500 to-blue-500 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]',
-  'Core & Full-Stack': 'from-blue-500 to-indigo-500 hover:border-blue-500/30 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]',
-  'AI & LLM Architecture': 'from-indigo-500 to-purple-500 hover:border-indigo-500/30 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]',
-  'Data Intelligence & CV': 'from-purple-500 to-pink-500 hover:border-purple-500/30 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)]',
-  'Product Design & Experience': 'from-pink-500 to-cyan-500 hover:border-pink-500/30 hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]',
-  'Databases & Cloud': 'from-cyan-500 to-purple-500 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]',
-}
+  // Track the scroll progress of this specific card container relative to the screen
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start start", "end start"] // active when the card sticks at the top and the next ones scroll past
+  });
 
-const TechMatrix = ({ skills }) => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  // Interpolate scale down, fade, and slight vertical translation when stacked over
+  // Exit scale is 0.9 and exit opacity is 0.1 to make the card underneath invisible once fully covered
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.1]);
+  const yOffset = useTransform(scrollYProgress, [0, 1], [0, -25]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  }
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-  }
-
-  const keywords = [
-    'Python', 'Flask', 'MySQL', 'React', 'TypeScript', 'Node.js', 
-    'Express', 'MongoDB', 'Socket.IO', 'PyTorch', 'CUDA', 'OpenCV', 
-    'Unity', 'C#', 'Figma', 'UI/UX', 'RAG', 'LLMs', 'DSP'
-  ]
+  const Icon = card.icon;
 
   return (
-    <section id="skills" className="py-16 relative overflow-hidden">
-      {/* Decorative background blob */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-        <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
-
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
-              Skills & <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Expertise</span>
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mb-4" />
-            <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-              My technical toolkit spanning core software engineering, artificial intelligence systems, computer vision, and product design.
-            </p>
-          </motion.div>
-
-          {/* Skills grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Object.entries(skills).map(([category, skillList], index) => {
-              const IconComponent = categoryIcons[category] || Code
-              const cardColorClass = categoryColors[category] || 'from-cyan-500 to-blue-500 hover:border-cyan-500/30'
-
-              return (
-                <motion.div
-                  key={category}
-                  variants={itemVariants}
-                  className={`bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-300 group ${cardColorClass}`}
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="p-2.5 rounded-lg bg-white/5 text-cyan-400 group-hover:text-white transition-colors duration-300">
-                      <IconComponent size={20} />
-                    </div>
-                    <h3 className="text-lg font-bold text-white tracking-tight">
-                      {category}
-                    </h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {skillList.map((skill, skillIndex) => (
-                      <motion.span
-                        key={skill}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 + skillIndex * 0.05 }}
-                        className="inline-block bg-white/[0.02] border border-white/5 text-slate-300 px-3 py-1 rounded-lg text-xs font-mono transition-all duration-300 hover:border-cyan-400/30 hover:bg-white/[0.05]"
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
-                  </div>
-                </motion.div>
-              )
-            })}
+    <div
+      ref={cardRef}
+      className="skill-card"
+      style={{
+        zIndex: 10 + idx,
+      }}
+    >
+      <motion.div
+        style={{
+          scale,
+          opacity,
+          y: yOffset,
+        }}
+        className="bg-white border border-black/10 p-8 rounded-[2rem] shadow-[0_15px_35px_rgba(0,0,0,0.06)] hover:shadow-2xl transition-shadow duration-300 text-left relative group cursor-pointer"
+      >
+        {/* Accent Tag */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="text-xs font-mono font-bold text-amber-600 uppercase tracking-widest">
+            Capabilities
           </div>
+          <div className="text-3xl font-black text-black/10 font-mono">
+            {card.num}
+          </div>
+        </div>
 
-          {/* Key Capabilities Show Case */}
-          <motion.div variants={itemVariants} className="mt-16 bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-cyan-500/20 transition-all duration-300 shadow-xl">
-            <h3 className="text-xl font-bold text-white mb-6 tracking-tight flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              Primary Core Domains
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-5 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.02] transition-colors">
-                <h4 className="font-bold text-white text-sm mb-2">Deep Learning & CV</h4>
-                <p className="text-slate-400 text-xs leading-relaxed">
-                  Building and deploying computer vision and sequence detection pipelines using OpenCV, PyTorch, and CUDA.
-                </p>
-              </div>
-              <div className="p-5 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.02] transition-colors">
-                <h4 className="font-bold text-white text-sm mb-2">Full-Stack & APIs</h4>
-                <p className="text-slate-400 text-xs leading-relaxed">
-                  Architecting concurrent backend pipelines and REST APIs using Python, Flask, Node.js, and relational databases.
-                </p>
-              </div>
-              <div className="p-5 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.02] transition-colors">
-                <h4 className="font-bold text-white text-sm mb-2">AI & RAG</h4>
-                <p className="text-slate-400 text-xs leading-relaxed">
-                  Exploring prompt optimization, vector embeddings, semantic retrieval, and multi-agent systems orchestration.
-                </p>
-              </div>
-            </div>
-          </motion.div>
+        {/* Title */}
+        <h3 className="text-2xl font-black text-black flex items-center space-x-3 mb-3">
+          <div className="p-2 rounded-xl bg-black/5 text-black group-hover:bg-amber-500 group-hover:text-black transition-colors duration-300">
+            <Icon size={20} />
+          </div>
+          <span>{card.title}</span>
+        </h3>
 
-          {/* Keywords cloud */}
-          <motion.div variants={itemVariants} className="mt-12 text-center">
-            <div className="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto">
-              {keywords.map((keyword, index) => (
-                <motion.span
-                  key={keyword}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.03 }}
-                  className="text-xs text-slate-500 hover:text-cyan-400 transition-colors duration-300 font-mono tracking-tight"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  #{keyword}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
+        {/* Description */}
+        <p className="text-black/60 text-sm mb-6 leading-relaxed">
+          {card.description}
+        </p>
+
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-1.5">
+          {card.tech.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs font-mono font-medium bg-black/5 hover:bg-amber-500/10 hover:text-amber-600 text-black/75 px-3 py-1 rounded-full transition-colors duration-300"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+const TechMatrix = ({ skills }) => {
+  const cardsData = [
+    {
+      num: '01',
+      title: 'AI & LLM Architecture',
+      description: 'Designing retrieval-augmented systems, agent orchestration, and custom model prompt setups.',
+      icon: Brain,
+      tech: skills['AI & LLM Architecture'] || [],
+    },
+    {
+      num: '02',
+      title: 'Data Intelligence & Computer Vision',
+      description: 'Building machine learning datasets, video sequence detection pipelines, and spectral models.',
+      icon: Eye,
+      tech: skills['Data Intelligence & CV'] || [],
+    },
+    {
+      num: '03',
+      title: 'Full-Stack & Core Systems',
+      description: 'Writing scalable interfaces, concurrent databases, and backend automation CLI systems.',
+      icon: Cpu,
+      tech: skills['Core & Full-Stack'] || [],
+    },
+    {
+      num: '04',
+      title: 'Product Design & Experience',
+      description: 'Crafting premium interactive mockups, animations, and clean portfolio layouts.',
+      icon: Palette,
+      tech: skills['Product Design & Experience'] || [],
+    }
+  ];
+
+  return (
+    <section id="skills" className="py-24 relative max-w-7xl mx-auto px-6 md:px-12 border-t border-black/5">
+
+      {/* Sticky section title */}
+      <div className="mb-12 text-left">
+        <div className="text-xs uppercase tracking-widest font-mono font-bold text-amber-600 mb-2">
+          / Services, Skills &amp; Capabilities
+        </div>
+        <h2 className="text-4xl sm:text-5xl font-black text-black leading-tight">
+          What I do <span className="text-amber-500">best?</span>
+        </h2>
+        <p className="text-black/60 text-sm md:text-base leading-relaxed max-w-xl mt-3">
+          I build robust, intelligent software solutions. Leveraging my background in Computer Science and AI, I turn theoretical machine learning concepts into actual, working platforms.
+        </p>
       </div>
-    </section>
-  )
-}
 
-export default TechMatrix
+      <div className="grid lg:grid-cols-12 gap-12 items-start relative">
+        {/* Left Column (Stacking cards with parallax exit layering) */}
+        <div className="lg:col-span-7 skills pb-24">
+          {cardsData.map((card, idx) => (
+            <StackingCard key={card.num} card={card} idx={idx} />
+          ))}
+        </div>
+
+        {/* Right Column (Allocated space for sticky profile card) */}
+        <div className="lg:col-span-5 hidden lg:block h-[500px] sticky top-[150px]">
+          {/* Handled by fixed positioning inside App.jsx */}
+        </div>
+      </div>
+
+    </section>
+  );
+};
+
+export default TechMatrix;

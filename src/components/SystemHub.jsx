@@ -42,8 +42,8 @@ const SystemHub = ({ contactInfo }) => {
     {
       icon: Instagram,
       label: 'Instagram',
-      href: 'https://instagram.com/prishhhhhhh_',
-      value: '@prishhhhhhh_'
+      href: 'https://instagram.com/prishhhhhhhh_',
+      value: '@prishhhhhhhh_'
     },
     {
       icon: Facebook,
